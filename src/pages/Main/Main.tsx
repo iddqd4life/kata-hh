@@ -1,0 +1,59 @@
+import { Alert, Box, Container, Flex, Loader } from '@mantine/core';
+import Header from '../../components/Header/Header';
+import Hero from '../../components/Hero/Hero';
+import Filters from '../../components/Filters/Filters.tsx';
+import { useTypedDispatch, useTypedSelector } from '../../hooks/redux.ts';
+import { fetchVacanciesThunk } from '../../reducers/vacanciesThunk.ts';
+import React from 'react';
+import VacanciesList from '../../components/VacanciesList/VacanciesList.tsx';
+
+const Main = () => {
+  const { filters, pagination, status, error, jobs } = useTypedSelector((state) => state.vacancies);
+  const dispatch = useTypedDispatch();
+
+  React.useEffect(() => {
+    const abortController = new AbortController();
+    const page = pagination.currentPage;
+    dispatch(fetchVacanciesThunk({ filters, page, abortController }));
+
+    return () => abortController.abort();
+  }, [dispatch, filters, pagination.currentPage]);
+
+  const Content = () => {
+    switch (status) {
+      case 'loading':
+        return <Loader />;
+      case 'error':
+        return (
+          <Alert color={'red'} title={'Ошибка!'}>
+            {error}
+          </Alert>
+        );
+      case 'success':
+        return jobs.length ? (
+          <VacanciesList />
+        ) : (
+          <Alert color={'indigo'} title={'Упс!'}>
+            Кажется, ничего не нашлось...
+          </Alert>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <Box mih={'100vh'} bg={'#F6F6F7'}>
+      <Header />
+      <Hero />
+      <Container maw={1000} w="100%" py={24}>
+        <Flex gap={24} align={'start'}>
+          <Filters />
+          {Content()}
+        </Flex>
+      </Container>
+    </Box>
+  );
+};
+
+export default Main;
