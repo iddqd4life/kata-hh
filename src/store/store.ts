@@ -3,7 +3,10 @@ import vacancies from '../slices/vacanciesSlice.ts';
 
 const rootReducer = combineReducers({ vacancies });
 
-const setupStore = () => configureStore({ reducer: rootReducer });
+const setupStore = () =>
+  configureStore({
+    reducer: rootReducer,
+  });
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;

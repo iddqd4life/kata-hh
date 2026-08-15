@@ -43,13 +43,13 @@ const Vacancy = () => {
           <VacancyCard job={data.job} navigateButton={false} />
           <Stack p={24} bg={'#fff'} bdrs={'12px'}>
             <Stack gap={12}>
-              <Title order={2} size={20}>
+              <Title order={2} size={20} fw={600}>
                 Компания
               </Title>
               <Text>{data.job.about_company}</Text>
             </Stack>
             <Stack gap={8}>
-              <Title order={2} size={16}>
+              <Title order={2} size={16} fw={600}>
                 О вакансии
               </Title>
               <Text>{data.job.description}</Text>

@@ -5,10 +5,23 @@ import { fetchVacanciesThunk } from '../../reducers/vacanciesThunk.ts';
 import React from 'react';
 import VacanciesList from '../../components/VacanciesList/VacanciesList.tsx';
 import Hero from '../../components/Hero/Hero.tsx';
+import { useSearchParams } from 'react-router';
 
 const Vacancies = () => {
   const { filters, pagination, status, error, jobs } = useTypedSelector((state) => state.vacancies);
   const dispatch = useTypedDispatch();
+  const [_, setSearchParams] = useSearchParams();
+
+  React.useEffect(() => {
+    const normalizedFilters = Object.entries(filters).reduce(
+      (acc, [key, value]) => {
+        if (value?.length) acc[key] = value.toString();
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
+    setSearchParams(normalizedFilters);
+  }, [filters, setSearchParams]);
 
   React.useEffect(() => {
     const abortController = new AbortController();

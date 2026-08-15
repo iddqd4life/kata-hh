@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router';
 
 interface IProps {
   job: IJob;
-  navigateButton: boolean;
+  navigateButton?: boolean;
 }
 
 const VacancyCard = ({ job, navigateButton = true }: IProps) => {

@@ -9,12 +9,20 @@ interface IState {
   error: string;
 }
 
+const getInitialFilters = (): IFilters => {
+  const searchParams = new URLSearchParams(window.location.search);
+
+  return searchParams.toString()
+    ? {
+        skills: searchParams.get('skills')?.split(',') || [],
+        search: searchParams.get('search') || '',
+        city: searchParams.get('city') || '',
+      }
+    : { skills: ['JavaScript', 'React', 'Redux', 'Python'], search: '', city: '' };
+};
+
 const initialState: IState = {
-  filters: {
-    skills: ['JavaScript', 'React', 'Redux', 'Python'],
-    search: '',
-    city: '',
-  },
+  filters: getInitialFilters(),
   pagination: {
     currentPage: 1,
     totalPages: 1,
