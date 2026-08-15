@@ -6,9 +6,14 @@ interface IJob {
   salary: string;
   published_at: string;
   short_description: string;
-  space: string; // TODO: enum
+  space: string;
   skills: string;
   experience: string;
+}
+
+interface IJobExtended extends IJob {
+  description: string;
+  about_company: string;
 }
 
 interface IFilters {

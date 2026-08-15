@@ -1,10 +1,14 @@
 import { Flex, Stack, Title, Text, Badge, Anchor, Button } from '@mantine/core';
+import { Link, useNavigate } from 'react-router';
 
 interface IProps {
   job: IJob;
+  navigateButton: boolean;
 }
 
-const VacancyCard = ({ job }: IProps) => {
+const VacancyCard = ({ job, navigateButton = true }: IProps) => {
+  const navigate = useNavigate();
+
   const Space = () => {
     switch (job.space) {
       case 'office':
@@ -31,7 +35,7 @@ const VacancyCard = ({ job }: IProps) => {
   return (
     <Stack gap={16} p={24} bg={'#ffffff'} bdrs={12} align={'start'}>
       <Stack gap={8}>
-        <Anchor href={'#'} c={'indigo.9'}>
+        <Anchor to={`/vacancies/${job.id}`} c={'indigo.9'} component={Link}>
           <Title fw={600} size={'20px'}>
             {job.name}
           </Title>
@@ -56,9 +60,18 @@ const VacancyCard = ({ job }: IProps) => {
           </Text>
         </Stack>
       </Stack>
-      <Button size={'sm'} radius={'sm'} bg={'rgba(15, 15, 16, 1)'} fw={400} c={'#ffffff'}>
-        Смотреть вакансию
-      </Button>
+      {navigateButton && (
+        <Button
+          onClick={() => navigate(`/vacancies/${job.id}`)}
+          size={'sm'}
+          radius={'sm'}
+          bg={'rgba(15, 15, 16, 1)'}
+          fw={400}
+          c={'#ffffff'}
+        >
+          Смотреть вакансию
+        </Button>
+      )}
     </Stack>
   );
 };

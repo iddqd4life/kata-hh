@@ -1,13 +1,12 @@
-import { Alert, Box, Container, Flex, Loader } from '@mantine/core';
-import Header from '../../components/Header/Header';
-import Hero from '../../components/Hero/Hero';
+import { Alert, Container, Flex, Loader } from '@mantine/core';
 import Filters from '../../components/Filters/Filters.tsx';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux.ts';
 import { fetchVacanciesThunk } from '../../reducers/vacanciesThunk.ts';
 import React from 'react';
 import VacanciesList from '../../components/VacanciesList/VacanciesList.tsx';
+import Hero from '../../components/Hero/Hero.tsx';
 
-const Main = () => {
+const Vacancies = () => {
   const { filters, pagination, status, error, jobs } = useTypedSelector((state) => state.vacancies);
   const dispatch = useTypedDispatch();
 
@@ -43,8 +42,7 @@ const Main = () => {
   };
 
   return (
-    <Box mih={'100vh'} bg={'#F6F6F7'}>
-      <Header />
+    <>
       <Hero />
       <Container maw={1000} w="100%" py={24}>
         <Flex gap={24} align={'start'}>
@@ -52,8 +50,8 @@ const Main = () => {
           {Content()}
         </Flex>
       </Container>
-    </Box>
+    </>
   );
 };
 
-export default Main;
+export default Vacancies;
