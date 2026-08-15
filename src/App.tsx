@@ -1,20 +1,26 @@
 import ThemeProvider from './providers/ThemeProvider';
 import Vacancies from './pages/Vacancies/Vacancies.tsx';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
+import { createBrowserRouter, redirect, RouterProvider } from 'react-router';
 import MainLayout from './layouts/MainLayout.tsx';
 import Vacancy from './pages/Vacancy/Vacancy.tsx';
+import NotFound from './pages/NotFound/NotFound.tsx';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    Component: MainLayout,
+    children: [
+      { index: true, loader: () => redirect('/vacancies') },
+      { path: 'vacancies', Component: Vacancies },
+      { path: 'vacancies/:id', Component: Vacancy },
+      { path: '*', Component: NotFound },
+    ],
+  },
+]);
 
 const App = () => (
   <ThemeProvider>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<Navigate to={'vacancies'} replace />} />
-          <Route path={'vacancies'} element={<Vacancies />} />
-          <Route path={'vacancies/:id'} element={<Vacancy />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <RouterProvider router={router} />
   </ThemeProvider>
 );
 

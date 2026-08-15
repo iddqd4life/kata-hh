@@ -20,7 +20,7 @@ const Vacancies = () => {
       },
       {} as Record<string, string>,
     );
-    setSearchParams(normalizedFilters);
+    setSearchParams(normalizedFilters, { replace: true });
   }, [filters, setSearchParams]);
 
   React.useEffect(() => {
