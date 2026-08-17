@@ -4,6 +4,7 @@ import { createBrowserRouter, redirect, RouterProvider } from 'react-router';
 import MainLayout from './layouts/MainLayout.tsx';
 import Vacancy from './pages/Vacancy/Vacancy.tsx';
 import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
+import About from './pages/About/About.tsx';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
       { path: 'vacancies', Component: Vacancies },
       { path: 'vacancies/:cityByRoute', Component: Vacancies },
       { path: 'vacancies/:id', Component: Vacancy },
+      { path: 'about', Component: About },
     ],
   },
 ]);
