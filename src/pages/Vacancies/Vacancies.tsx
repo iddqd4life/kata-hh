@@ -5,12 +5,14 @@ import { fetchVacanciesThunk } from '../../reducers/vacanciesThunk.ts';
 import React from 'react';
 import VacanciesList from '../../components/VacanciesList/VacanciesList.tsx';
 import Hero from '../../components/Hero/Hero.tsx';
-import { useSearchParams } from 'react-router';
+import { useParams, useSearchParams } from 'react-router';
 
 const Vacancies = () => {
+  const { cityByRoute } = useParams();
+
   const { filters, pagination, status, error, jobs } = useTypedSelector((state) => state.vacancies);
   const dispatch = useTypedDispatch();
-  const [_, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   React.useEffect(() => {
     const normalizedFilters = Object.entries(filters).reduce(
@@ -26,10 +28,10 @@ const Vacancies = () => {
   React.useEffect(() => {
     const abortController = new AbortController();
     const page = pagination.currentPage;
-    dispatch(fetchVacanciesThunk({ filters, page, abortController }));
+    dispatch(fetchVacanciesThunk({ filters, cityByRoute, page, abortController }));
 
     return () => abortController.abort();
-  }, [dispatch, filters, pagination.currentPage]);
+  }, [dispatch, filters, pagination.currentPage, cityByRoute]);
 
   const Content = () => {
     switch (status) {

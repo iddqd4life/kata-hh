@@ -4,17 +4,27 @@ interface IParams {
   filters: IFilters;
   page: number;
   abortController?: AbortController;
+  cityByRoute?: string;
 }
 
 export const fetchVacanciesThunk = createAsyncThunk(
   'vacancies/fetchVacanciesThunk',
-  async ({ filters, page, abortController }: IParams, { rejectWithValue }) => {
-    // TODO: refactor with getState?
-
+  async ({ filters, page, abortController, cityByRoute }: IParams, { rejectWithValue }) => {
     const { skills, search, city } = filters;
 
+    const getCityParam = () => {
+      switch (cityByRoute) {
+        case 'moscow':
+          return 'Москва';
+        case 'petersburg':
+          return 'Санкт-Петербург';
+        default:
+          return city;
+      }
+    };
+
     const url = 'https://kata-jobs.onrender.com/api/jobs';
-    const queryParams = `?skills=${skills.join(',')}&search=${search}&city=${city}&page=${page}`;
+    const queryParams = `?skills=${skills.join(',')}&search=${search}&city=${getCityParam()}&page=${page}`;
 
     try {
       const res = await fetch(url + queryParams, { signal: abortController?.signal });
