@@ -1,4 +1,4 @@
-import { ActionIcon, Box, Flex, Input, Stack, Text, Image, Pill, Select } from '@mantine/core';
+import { ActionIcon, Flex, Input, Stack, Text, Image, Pill } from '@mantine/core';
 import PlusIcon from '/src/assets/plus.svg';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux.ts';
 import React from 'react';
@@ -24,7 +24,7 @@ const Filters = () => {
   };
 
   return (
-    <Stack maw={317} w={'100%'}>
+    <Stack maw={317} w={'100%'} mt={60}>
       <Stack bg={'#ffffff'} p={24} bdrs={12} gap={12}>
         <Text size={'14px'} lh={'20px'} c={'rgba(33, 37, 41, 1)'} fw={600}>
           Ключевые навыки
@@ -52,17 +52,6 @@ const Filters = () => {
           ))}
         </Flex>
       </Stack>
-      <Box p={24} bg={'#ffffff'} bdrs={12}>
-        <Select
-          value={filters.city}
-          onChange={(value) => dispatch(updateFilters({ ...filters, city: value as string }))}
-          data={[
-            { value: '', label: 'Все города' },
-            { value: 'Москва', label: 'Москва' },
-            { value: 'Санкт-Петербург', label: 'Санкт-Петербург' },
-          ]}
-        />
-      </Box>
     </Stack>
   );
 };

@@ -1,0 +1,10 @@
+.navlink {
+  opacity: 0.5;
+  color: #0F0F10;
+  width: max-content;
+
+  &:global(.active) {
+    opacity: 1;
+    background: none;
+  }
+}
